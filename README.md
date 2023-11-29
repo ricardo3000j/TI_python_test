@@ -24,7 +24,7 @@ The test suite was designed using unittest test.
 This suite include unit testing for each method of the classes and integration testing to test the app execution. 
 ## Solving Explanation
 # Assumptions
-    - All the input integers are positive and have a value less than 1000. Negative interger and non interger values won't be stored in the collection
+    - All the input integers are positive and have a value less than 1000. Negative integer and non integer values won't be stored in the collection
     - The collection of integers allows duplicated values, meaning the data collector can store the same values multiple times. The use of a set as a data structure is discarded.
 
 
@@ -33,9 +33,9 @@ This allows storing numbers in a sorted collection where the index of the array 
 
 
 To calculate the statistics of the collection, an array will also be used as a data structure. 
-where the index will be the interger itself but the value of element will be the cumulative sum of all the previuos elements 
-and the count of ocurrence of the current interger. This allow to calculate the statitic Less, greater and between only providing
-the interger(index) instead of interate over the array each time the any of the methods is requested. 
+where the index will be the integer itself but the value of element will be the cumulative sum of all the previuos elements 
+and the count of ocurrence of the current integer. This allow to calculate the statitic Less, greater and between only providing
+the integer(index) instead of interate over the array each time that any of the methods is requested. 
 
 `DataCapture` class allows to create capture object
 The capture object has these attributes
