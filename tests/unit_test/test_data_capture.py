@@ -92,10 +92,20 @@ class TestStatistics(unittest.TestCase):
         capture.add("a")
         self.assertEqual(capture.build_stats().greater(4), 0)
 
+    def test_greater_not_integer_value_2(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().greater("a"), None)
+
     def test_greater_negative_value(self):
         capture = DataCapture()
         capture.add(-5)
         self.assertEqual(capture.build_stats().greater(4), 0)
+
+    def test_greater_negative_value_2(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().greater(-5), None)
 
     def test_less(self):
         capture = DataCapture()
@@ -119,10 +129,20 @@ class TestStatistics(unittest.TestCase):
         capture.add("a")
         self.assertEqual(capture.build_stats().less(4), 0)
 
+    def test_less_not_integer_value_2(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().less("a"), None)
+
     def test_less_negative_value(self):
         capture = DataCapture()
         capture.add(-5)
         self.assertEqual(capture.build_stats().less(4), 0)
+
+    def test_less_negative_value_2(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().less(-5), None)
 
     def test_between(self):
         capture = DataCapture()
@@ -147,10 +167,20 @@ class TestStatistics(unittest.TestCase):
         capture.add("a")
         self.assertEqual(capture.build_stats().between(3, 6), 0)
 
+    def test_between_not_integer_value_2(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().between("a", 6), None)
+
     def test_between_negative_value(self):
         capture = DataCapture()
         capture.add(-5)
         self.assertEqual(capture.build_stats().between(3, 6), 0)
+
+    def test_between_negative_value_2(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().between(-5, 6), None)
 
 
 if __name__ == "__main__":

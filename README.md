@@ -27,7 +27,6 @@ This suite include unit testing for each method of the classes and integration t
     - All the input integers are positive and have a value less than 1000. Negative integer and non integer values won't be stored in the collection
     - The collection of integers allows duplicated values, meaning the data collector can store the same values multiple times. The use of a set as a data structure is discarded.
 
-
 Based on the assumption and the requirement to calculate the statistics, the data structure to store the collection of integers is a counter array. 
 This allows storing numbers in a sorted collection where the index of the array is the integer itself, and the value of the array is the count of occurrences.
 
@@ -51,6 +50,7 @@ the stats object has these attributes
     - `cumulative_sum`: array for cumulative sum of counter array values
 
 the calculation of the statistic through `less`, `greater` and `between` methods is done using the cumulative_sum attribute allowing an algorithm complexity of O(1)
- 
+the methods `less`, `greater` and `between` only do the operation if the input is a positive integer, for invalid inputs like no integers or negative integers the methods
+will return None
 
 
