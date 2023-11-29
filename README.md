@@ -20,7 +20,7 @@ Team International Python Test - Ricardo Jarquin
 - To run the test suite execute `python -m unittest discover tests`
 ## Testing
 The test suite was designed using unittest test. 
-This suit include unit testing for each method of the classes and integration testing to test the app execution. 
+This suite include unit testing for each method of the classes and integration testing to test the app execution. 
 ## Solving Explanation
 # Assumptions
     - All the input integers are positive and have a value less than 1000. Negative interger and non interger values won't be stored in the collection
@@ -32,7 +32,7 @@ This allows storing numbers in a sorted collection where the index of the array 
 
 
 To calculate the statistics of the collection, an array will also be used as a data structure. 
-where the index continue will be the interger itself but the value of element will be the cumulative sum of all the previuos elements 
+where the index will be the interger itself but the value of element will be the cumulative sum of all the previuos elements 
 and the count of ocurrence of the current interger. This allow to calculate the statitic Less, greater and between only providing
 the interger(index) instead of interate over the array each time the any of the methods is requested. 
 
@@ -51,7 +51,5 @@ the stats object has these attributes
 
 the calculation of the statistic through `less`, `greater` and `between` methods is done using the cumulative_sum attribute allowing an algorithm complexity of O(1)
  
-
-
 
 
