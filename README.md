@@ -10,6 +10,8 @@ Team International Python Test - Ricardo Jarquin
 - `/tests` - test suite written with unittest
 - `/tests/unit_test` - unit test of the project related to DataCapture and Statitics classes
 - `/tests/integration_test`- Test to validate the full execution of the app
+- `data_capture.py` - Module where DataCapture and Statistics are defined
+
 ## Code Standards 
 - This project uses Python `black` based code formatting, [read all about it](https://black.readthedocs.io/en/stable/the_black_code_style/index.html)
 
