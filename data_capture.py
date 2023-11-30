@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 
 class Statistics:
@@ -17,17 +17,20 @@ class Statistics:
     def __init__(self, counters: List[int]) -> None:
         self.cumulative_sum: List[int] = counters
 
-    def less(self, number: int) -> int:
+    def less(self, number: int) -> Optional[int]:
         if validate_input(number):
             return self.cumulative_sum[number - 1]
+        return None
 
-    def greater(self, number: int) -> int:
+    def greater(self, number: int) -> Optional[int]:
         if validate_input(number):
             return self.cumulative_sum[-1] - self.cumulative_sum[number]
+        return None
 
-    def between(self, start: int, end: int) -> int:
+    def between(self, start: int, end: int) -> Optional[int]:
         if validate_input(start) and validate_input(end) and start < end:
             return self.cumulative_sum[-1] - (self.less(start) + self.greater(end))
+        return None
 
 
 class DataCapture:
