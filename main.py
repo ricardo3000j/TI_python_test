@@ -14,7 +14,6 @@ def app():
     print(
         stats.greater(4)
     )  # should return 2 (6 and 9 are the only two values greater than 4)
-
     return [stats.less(4), stats.between(3, 6), stats.greater(4)]
 
 

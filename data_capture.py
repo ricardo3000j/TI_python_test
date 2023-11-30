@@ -26,7 +26,7 @@ class Statistics:
             return self.cumulative_sum[-1] - self.cumulative_sum[number]
 
     def between(self, start: int, end: int) -> int:
-        if validate_input(start) and validate_input(end):
+        if validate_input(start) and validate_input(end) and start < end:
             return self.cumulative_sum[-1] - (self.less(start) + self.greater(end))
 
 
@@ -42,8 +42,8 @@ class DataCapture:
     """
 
     def __init__(self) -> None:
-        self.counter: List[int] = [0] * 1000
-        self.cumulative_sum: List[int] = [0] * 1000
+        self.counter: List[int] = [0] * 1001
+        self.cumulative_sum: List[int] = [0] * 1001
 
     def add(self, value) -> None:
         if validate_input(value):  # check if value is positive integer
@@ -61,7 +61,4 @@ class DataCapture:
 
 
 def validate_input(input_value):
-    if isinstance(input_value, int) and input_value >= 0:
-        return True
-    else:
-        return False
+    return isinstance(input_value, int) and 0 < input_value <= 1000

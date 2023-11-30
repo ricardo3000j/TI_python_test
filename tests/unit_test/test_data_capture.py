@@ -21,7 +21,7 @@ class TestDataCapture(unittest.TestCase):
         capture.add(1)
         capture.add(2)
         capture.add(1)
-        expected_counter = [0] * 1000
+        expected_counter = [0] * 1001
         expected_counter[1] = 2
         expected_counter[2] = 1
         self.assertEqual(capture.counter, expected_counter)
@@ -29,23 +29,39 @@ class TestDataCapture(unittest.TestCase):
     def test_add_negative_value(self):
         capture = DataCapture()
         capture.add(-1)
-        expected_counter = [0] * 1000
+        expected_counter = [0] * 1001
         self.assertEqual(capture.counter, expected_counter)
 
     def test_add_zero_value(self):
         capture = DataCapture()
         capture.add(0)
-        self.assertEqual(capture.counter[0], 1)
+        self.assertEqual(capture.counter[0], 0)
+
+    def test_add_value_out_of_range(self):
+        capture = DataCapture()
+        capture.add(1001)
+        expected_counter = [0] * 1001
+        self.assertEqual(capture.counter, expected_counter)
+
+    def test_add_value_upper_bound(self):
+        capture = DataCapture()
+        capture.add(1000)
+        self.assertEqual(capture.counter[1000], 1)
+
+    def test_add_value_lower_bound(self):
+        capture = DataCapture()
+        capture.add(1)
+        self.assertEqual(capture.counter[1], 1)
 
     def test_add_not_integer_value(self):
         capture = DataCapture()
         capture.add("a")
-        expected_counter = [0] * 1000
+        expected_counter = [0] * 1001
         self.assertEqual(capture.counter, expected_counter)
 
     def test_empty_counter(self):
         capture = DataCapture()
-        expected_counter = [0] * 1000
+        expected_counter = [0] * 1001
         self.assertEqual(capture.counter, expected_counter)
 
     def test_cumulative_sum(self):
@@ -53,16 +69,16 @@ class TestDataCapture(unittest.TestCase):
         capture.add(1)
         capture.add(2)
         capture.add(1)
-        expected_cumulative_sum = [0] * 1000
+        expected_cumulative_sum = [0] * 1001
         expected_cumulative_sum[1] = 2
         expected_cumulative_sum[2] = 3
-        expected_cumulative_sum[3:] = [3] * 997
+        expected_cumulative_sum[3:] = [3] * 998
         stats = capture.build_stats()
         self.assertEqual(stats.cumulative_sum, expected_cumulative_sum)
 
     def test_cumulative_sum_empty(self):
         capture = DataCapture()
-        expected_cumulative_sum = [0] * 1000
+        expected_cumulative_sum = [0] * 1001
         stats = capture.build_stats()
         self.assertEqual(stats.cumulative_sum, expected_cumulative_sum)
 
@@ -107,6 +123,28 @@ class TestStatistics(unittest.TestCase):
         capture.add(5)
         self.assertEqual(capture.build_stats().greater(-5), None)
 
+    def test_greater_zero(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().greater(0), None)
+
+    def test_greater_out_of_range(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().greater(1001), None)
+
+    def test_greater_upper_bound(self):
+        capture = DataCapture()
+        capture.add(5)
+        capture.add(1000)
+        self.assertEqual(capture.build_stats().greater(1000), 0)
+
+    def test_greater_lower_bound(self):
+        capture = DataCapture()
+        capture.add(5)
+        capture.add(1)
+        self.assertEqual(capture.build_stats().greater(1), 1)
+
     def test_less(self):
         capture = DataCapture()
         capture.add(3)
@@ -143,6 +181,28 @@ class TestStatistics(unittest.TestCase):
         capture = DataCapture()
         capture.add(5)
         self.assertEqual(capture.build_stats().less(-5), None)
+
+    def test_less_zero(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().less(0), None)
+
+    def test_less_out_of_range(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().less(1001), None)
+
+    def test_less_upper_bound(self):
+        capture = DataCapture()
+        capture.add(5)
+        capture.add(1000)
+        self.assertEqual(capture.build_stats().less(1000), 1)
+
+    def test_less_lower_bound(self):
+        capture = DataCapture()
+        capture.add(5)
+        capture.add(1)
+        self.assertEqual(capture.build_stats().less(1), 0)
 
     def test_between(self):
         capture = DataCapture()
@@ -181,6 +241,62 @@ class TestStatistics(unittest.TestCase):
         capture = DataCapture()
         capture.add(5)
         self.assertEqual(capture.build_stats().between(-5, 6), None)
+
+    def test_between_inverted_index(self):
+        capture = DataCapture()
+        capture.add(3)
+        capture.add(3)
+        capture.add(4)
+        capture.add(6)
+        self.assertEqual(capture.build_stats().between(6, 3), None)
+
+    def test_between_out_of_range(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().between(1001, 1002), None)
+
+    def test_between_out_of_range_2(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().between(5, 1001), None)
+
+    def test_between_out_of_range_3(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().between(-5, 5), None)
+
+    def test_between_out_of_range_4(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().between(5, -5), None)
+
+    def test_between_zero(self):
+        capture = DataCapture()
+        capture.add(5)
+        self.assertEqual(capture.build_stats().between(0, 5), None)
+
+    def test_between_upper_bound(self):
+        capture = DataCapture()
+        capture.add(995)
+        capture.add(1000)
+        self.assertEqual(capture.build_stats().between(900, 1000), 2)
+
+    def test_between_lower_bound(self):
+        capture = DataCapture()
+        capture.add(5)
+        capture.add(1)
+        self.assertEqual(capture.build_stats().between(1, 6), 2)
+
+    def test_between_all_range(self):
+        capture = DataCapture()
+        capture.add(5)
+        capture.add(1)
+        capture.add(2)
+        capture.add(100)
+        capture.add(200)
+        capture.add(999)
+        capture.add(1000)
+        self.assertEqual(capture.build_stats().between(1, 1000), 7)
 
 
 if __name__ == "__main__":
